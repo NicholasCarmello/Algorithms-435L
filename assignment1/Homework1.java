@@ -24,32 +24,70 @@ public class Homework1{
           e.printStackTrace();
         }
         
-        
 
-        
+
+    //initalize a new Stack
+    Stack newStack = new Stack();
+    
+    for (int i = 0; i < myArray.length;i++){
+        for (int j = 0; j < myArray[i].length(); j++){
+            //System.out.println(Character.toString(myArray[i].charAt(j)));
+            if (Character.toString(myArray[i].charAt(j)).equals(" ")){
+                continue;
+            }
+            newStack.push(Character.toString(myArray[i].charAt(j)));
+            
+        }
     }
-
-
+    
+    while (newStack.top.next != null){
+        System.out.println(newStack.top.name);
+        newStack.top = newStack.top.next;
+    }
+    
+    }
 }
-class Queue{
-    Queue(){
-        
+
+class Stack{
+    Node top;
+    Node next;
+    void push(String previous){
+       
+        Node oldtop = top;
+        top = new Node();
+        top.name = previous;
+        top.next = oldtop;
     }
+    Node pop(){
+        Node oldTop = top;
+        top = top.next;
+        return oldTop;
+    }
+    
+    public boolean isEmpty(){return false;}
+}
+class Node{
+    String name;
+    Node next;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*class Queue{
+    Node head,tail;
     void enqueue(){
 
     }
     String dequeue(){
         return "";
     }
-}
-class Stack{
-    void push(){}
-    String pop(){return "";}
-    String top(){return "";}
-
-}
-class Node{
-    Node newNode;
-    Node nextNode;
-    Node tail;
-}
+    boolean isEmpty(){return false;}
+}*/
