@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 public class Homework1{
     
     public static void main(String[] args){
-        int countOfPalindrome; 
+        int countOfPalindrome = 0; 
         int count = 0;
         String myArray[];
         myArray = new String[666];
@@ -29,6 +29,8 @@ public class Homework1{
     //initalize a new Stack
     Stack newStack = new Stack();
     Queue newQueue = new Queue();
+    String queueValue;
+    String stackValue;
     for (int i = 0; i < myArray.length;i++){
         for (int j = 0; j < myArray[i].length(); j++){
             //System.out.println(Character.toString(myArray[i].charAt(j)));
@@ -37,19 +39,26 @@ public class Homework1{
             }
             newStack.push(Character.toString(myArray[i].charAt(j)).toLowerCase());
             newQueue.enqueue(Character.toString(myArray[i].charAt(j)).toLowerCase());
+            
+        }
+
+        while(newQueue.head != null && newStack.top != null){
+            queueValue = newQueue.dequeue();
+            stackValue = newStack.pop();
+            System.out.println(queueValue  + stackValue);
+            if (!queueValue.equals(stackValue)){
+                newQueue = new Queue();
+                newStack = new Stack();
+                break;
+            }
+            if (queueValue.equals(stackValue) && newStack.isEmpty()){
+                countOfPalindrome++;
+            }
+            
+            
         }
     }
-    
-    /*while (newStack.top.next != null){
-        System.out.println(newStack.top.name);
-        newStack.top = newStack.top.next;
-    }*/
-    
-    while (newQueue.head != null){
-        System.out.println(newQueue.head.name);
-        newQueue.head = newQueue.head.next;
-    }
-    
+    System.out.println(countOfPalindrome);
 
     }
 }
@@ -64,10 +73,10 @@ class Stack{
         top.name = previous;
         top.next = oldtop;
     }
-    Node pop(){
+    String pop(){
         Node oldTop = top;
         top = top.next;
-        return oldTop;
+        return oldTop.name;
     }
     
     public boolean isEmpty(){return top == null;}
@@ -107,7 +116,18 @@ class Queue{
 
     }
     String dequeue(){
-        return "";
+        String fetVal = "";
+        if (!isEmpty()){
+            fetVal = head.name;
+            head = head.next;
+            return fetVal;
+        }
+        if (isEmpty()){
+            return "Isempty";
+            
+        }
+        return fetVal;
+        
     }
     boolean isEmpty(){if (head == null){
         return true;
