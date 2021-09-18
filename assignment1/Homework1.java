@@ -28,23 +28,29 @@ public class Homework1{
 
     //initalize a new Stack
     Stack newStack = new Stack();
-    
+    Queue newQueue = new Queue();
     for (int i = 0; i < myArray.length;i++){
         for (int j = 0; j < myArray[i].length(); j++){
             //System.out.println(Character.toString(myArray[i].charAt(j)));
             if (Character.toString(myArray[i].charAt(j)).equals(" ")){
                 continue;
             }
-            newStack.push(Character.toString(myArray[i].charAt(j)));
-            
+            newStack.push(Character.toString(myArray[i].charAt(j)).toLowerCase());
+            newQueue.enqueue(Character.toString(myArray[i].charAt(j)).toLowerCase());
         }
     }
     
-    while (newStack.top.next != null){
+    /*while (newStack.top.next != null){
         System.out.println(newStack.top.name);
         newStack.top = newStack.top.next;
+    }*/
+    
+    while (newQueue.head != null){
+        System.out.println(newQueue.head.name);
+        newQueue.head = newQueue.head.next;
     }
     
+
     }
 }
 
@@ -64,8 +70,9 @@ class Stack{
         return oldTop;
     }
     
-    public boolean isEmpty(){return false;}
+    public boolean isEmpty(){return top == null;}
 }
+
 class Node{
     String name;
     Node next;
@@ -81,13 +88,32 @@ class Node{
 
 
 
-/*class Queue{
+class Queue{
     Node head,tail;
-    void enqueue(){
+    void enqueue(String inComingChar){
+
+        Node oldtail = tail;
+        tail = new Node();
+        tail.name = inComingChar;
+        tail.next = null;
+        
+    
+        if (isEmpty()){
+            head = tail;
+        }
+        else{
+            oldtail.next = tail;
+        }
 
     }
     String dequeue(){
         return "";
     }
-    boolean isEmpty(){return false;}
-}*/
+    boolean isEmpty(){if (head == null){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+}
