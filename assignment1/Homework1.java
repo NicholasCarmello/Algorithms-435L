@@ -45,20 +45,21 @@ public class Homework1{
         while(newQueue.head != null && newStack.top != null){
             queueValue = newQueue.dequeue();
             stackValue = newStack.pop();
-            System.out.println(queueValue  + stackValue);
+            
             if (!queueValue.equals(stackValue)){
                 newQueue = new Queue();
                 newStack = new Stack();
                 break;
             }
             if (queueValue.equals(stackValue) && newStack.isEmpty()){
+                System.out.println(myArray[i]);
                 countOfPalindrome++;
             }
             
             
         }
     }
-    System.out.println(countOfPalindrome);
+    System.out.println("There are " + countOfPalindrome + " paliondromes");
 
     }
 }
