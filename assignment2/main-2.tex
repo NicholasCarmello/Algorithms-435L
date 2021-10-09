@@ -165,16 +165,24 @@ public static void quickSort(String[] myArray, int smallIndex, int bigIndex) {
         return smallerElement;
     }
 \end{lstlisting}
-
-\begin{center}
 \section{Number of comparisons}
+\begin{center}
 \begin{tabular}{||c c c c||} 
  \hline
-Quick sort & Merge sort & Selection sort & Insertion sort \\ [0.5ex] 
+Quick sort & Merge sort & Selection sort & Insertion sort\\[0.5ex] 
  \hline\hline
  7236 & 5445 & 221444 & 114317 \\ 
  \hline
-
+ O(n log n) & O(n log n) & O(n2) & o(n2) \\
+ \hline
 \end{tabular}
 \end{center}
+\begin{lstlisting}
+Selection sort and insertion sort are both O (n^2) because they have 2 for loops in their algorithm.
+
+
+Merge sort and quick sort are both O(n log n) 
+because it goes through the first loop and then recursively halves them every time. 
+This is where the n log n comes into play.
+\end{lstlisting}
 \end{document}
