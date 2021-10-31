@@ -1,6 +1,7 @@
 import java.io.File;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
+import java.util.Random;
 
 public class Searching {    
     public static void main(String[] args) {
@@ -22,19 +23,46 @@ public class Searching {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+        
+        int averageTimeForBinarySearch = 0;
+        
+
         String RandomItems[] = new String[42];
+        Random rand = new Random();
+
+        for (int i = 0; i < RandomItems.length;i++){
+            RandomItems[i] = myArray[rand.nextInt(666)];
+        }
         
-        selectionSort(myArray);
-        linearSearch(myArray);
-        binarySearch(myArray);
-        hashTable(myArray);
+        linearSearch(RandomItems,myArray);
+        
     }
 
-    public static void linearSearch(String array[]){
-        
+    public static void linearSearch(String array[], String searchArray[]){
+        int averageTimeForLinearSearch = 0;
+        for (int i = 0; i< array.length;i++){
+            for (int j = 0; j < searchArray.length; j++){
+                if (array[i]==searchArray[j]){
+                    break;
+                }
+                averageTimeForLinearSearch +=1;
+            }
+        }
+        System.out.println(averageTimeForLinearSearch/42);
     }
-    public static void binarySearch(String array[]){
+    public static void binarySearch(String array[],String searchArray[]){
+        int averageTimeForBinarySearch = 0;
+        boolean found = false;
 
+        for (int i = 0; i < array.length; i ++){
+            while (found == false){
+
+                int medium = searchArray.length / 2;
+                
+
+
+            }
+        }
     }
 
     public static void hashTable(String array[]){
