@@ -60,11 +60,13 @@ public class Searching {
 
     public static void binarySearch(String array[], String searchArray[]) {
         float averageTimeForBinarySearch = 0;
-
+        selectionSort(searchArray);
+        selectionSort(array);
+        
         for (int i = 0; i < array.length; i++) {
 
             int start = 0;
-            int end = array.length - 1;
+            int end = searchArray.length - 1;
 
             while (start <= end) {
 
@@ -74,6 +76,7 @@ public class Searching {
                 // loop
                 if (searchArray[medium].replaceAll("\\s", "").compareTo(array[i].replaceAll("\\s", "")) == 0) {
                     averageTimeForBinarySearch += 1;
+                    
                     break;
                 }
                 // if the item is less than the current mid then the start becomes the medium
