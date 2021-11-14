@@ -33,7 +33,6 @@ public class Sorting {
 
         int selectionSortComparision = selectionSort(selectionSortArray);
         int comparisionArray = insertionSort(myArray.clone());
-        
         //I'm calling the quicksort and mergesort from the start and end of the array
         quickSort(quickSortArray, 0, myArray.length - 1);
         mergeSort(mergeSortArray, 0,myArray.length -1 );
@@ -170,7 +169,7 @@ public class Sorting {
             quickSortCount += 1;
             
         }
-        //This 
+        
         String temp = myArray[smallerElement + 1];
         myArray[smallerElement + 1] = myArray[bigIndex];
         myArray[bigIndex] = temp;
