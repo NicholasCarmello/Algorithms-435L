@@ -1,10 +1,14 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.io.File;
 import java.util.Scanner;
+
+import javax.swing.Action;
+
 import java.io.FileNotFoundException;
 import java.util.List;
-
+import java.util.Queue;
 public class GraphsAndTrees {
     public static void main(String[] args) {
 
@@ -46,8 +50,14 @@ public class GraphsAndTrees {
                 });
 
                 if (listOfNodes.size() != 0) {
+                    /*for (int j =0; j < listOfNodes.size(); j ++){
+                        System.out.println("key" + listOfNodes.get(j).id);
+                        listOfNodes.get(j).neighbors.forEach(action ->
+                        System.out.print( action.id + " "));
+
+                    }*/
                     BreadthFirst(listOfNodes.get(0));
-                    DepthFirst(listOfNodes.get(0));
+                    // DepthFirst(listOfNodes.get(0));
                 }
 
                 matrix = new ArrayList<List<String>>();
@@ -63,7 +73,7 @@ public class GraphsAndTrees {
                         graph = new GraphNode();
                         graph.id = findArray[2];
                         graph.processed = false;
-                        graph.neighbors = new ArrayList<>();
+                        graph.neighbors = new ArrayList<GraphNode>();
                         listOfNodes.add(graph);
                     } else {
                         // This adds both the adjacencys to the dictionary.
@@ -74,10 +84,12 @@ public class GraphsAndTrees {
                         GraphNode newNodeInGraph = new GraphNode();
                         newNodeInGraph.id = findArray[2];
                         newNodeInGraph.processed = false;
+                        newNodeInGraph.neighbors = new ArrayList<GraphNode>();
 
                         GraphNode anotherNodeInGraph = new GraphNode();
                         anotherNodeInGraph.id = findArray[4];
                         anotherNodeInGraph.processed = false;
+                        anotherNodeInGraph.neighbors = new ArrayList<GraphNode>();
                         listOfNodes.forEach(action -> {
                             if (action.id.equals(findArray[4])) {
                                 action.neighbors.add(newNodeInGraph);
@@ -85,8 +97,8 @@ public class GraphsAndTrees {
                             }
                             if (action.id.equals(findArray[2])) {
                                 action.neighbors.add(anotherNodeInGraph);
-
                             }
+                        
                         });
 
                     }
@@ -99,10 +111,19 @@ public class GraphsAndTrees {
     }
 
     public static void BreadthFirst(GraphNode node) {
-        if (node.id == null) {
-            return;
-        } else {
-
+        Queue<GraphNode> q = new LinkedList<>();
+        node.processed = true;
+        q.add(node);
+        while (q.size()>0){
+            GraphNode cv = q.remove();
+            System.out.println(cv.id);
+            cv.neighbors.forEach(action ->{
+                if (!action.processed){
+                    action.processed = true;
+                    q.add(action);
+                    
+                }
+            });
         }
     }
 
@@ -110,9 +131,10 @@ public class GraphsAndTrees {
         if (startNode.id == null) {
             return;
         } else {
-            if (startNode.processed) {
+            if (!startNode.processed) {
                 System.out.println(startNode.id);
                 startNode.processed = true;
+
             }
 
             startNode.neighbors.forEach(action -> {
