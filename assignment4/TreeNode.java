@@ -1,5 +1,5 @@
 public class TreeNode {
-    String val;
-    String left;
-    String Right;
+    String val = null;
+    TreeNode left= null;
+    TreeNode right =null;
 }
