@@ -4,12 +4,13 @@ import java.util.LinkedList;
 import java.io.File;
 import java.util.Scanner;
 
-import javax.swing.Action;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Queue;
 public class GraphsAndTrees {
+    public static int matrixAdd = 0;
+    public static int newAdd =0;
     public static void main(String[] args) {
 
         // Reading from the file and putting every line in an array for easy access.
@@ -33,7 +34,7 @@ public class GraphsAndTrees {
         }
 
         HashMap<String, List<String>> newGraph = new HashMap<String, List<String>>();
-        ArrayList<List<String>> matrix = new ArrayList<List<String>>();
+        ArrayList<int[]> matrix = new ArrayList<int[]>();
         GraphNode graph = new GraphNode();
         ArrayList<GraphNode> listOfNodes = new ArrayList<GraphNode>();
         graph.id = null;
@@ -41,7 +42,7 @@ public class GraphsAndTrees {
 
             String findArray[] = myArray[i].split(" ");
 
-            if (myArray[i].equals("new graph")) {
+            if (myArray[i].equals("new graph") || i == myArray.length -1) {
 
                 newGraph.entrySet().forEach(entry -> {
 
@@ -56,11 +57,18 @@ public class GraphsAndTrees {
                         System.out.print( action.id + " "));
 
                     }*/
-                    BreadthFirst(listOfNodes.get(0));
+                    //BreadthFirst(listOfNodes.get(0));
                     // DepthFirst(listOfNodes.get(0));
                 }
-
-                matrix = new ArrayList<List<String>>();
+                for (int m = 0; m < matrix.size(); m++){
+                    System.out.println(" ");
+                    for(int j = 0; j < matrix.get(m).length; j ++){
+                        System.out.print(matrix.get(m)[j]);
+                    }
+                }
+                matrix = new ArrayList<int[]>();
+                matrixAdd = 0;
+                newAdd = 0;
                 newGraph.clear();
             }
 
@@ -69,26 +77,33 @@ public class GraphsAndTrees {
                 if (findArray[0].equals("add")) {
                     if (findArray[1].equals("vertex")) {
                         newGraph.put(findArray[2], new ArrayList<String>());
-                        // matrix.add(new ArrayList<String>());
+                        matrixAdd +=1;
+                        
                         graph = new GraphNode();
                         graph.id = findArray[2];
                         graph.processed = false;
                         graph.neighbors = new ArrayList<GraphNode>();
                         listOfNodes.add(graph);
+
+                    
                     } else {
                         // This adds both the adjacencys to the dictionary.
-                        newGraph.get(findArray[2]).add(findArray[4]);
+                        if(newAdd == 0){
+                            newAdd = 1;
+                            
+                            for (int m = 0; m <= matrixAdd; m ++)
+                            matrix.add(new int[matrixAdd  +1]);
+                        }
+                    newGraph.get(findArray[2]).add(findArray[4]);
                         newGraph.get(findArray[4]).add(findArray[2]);
-                        // matrix.get(Integer.parseInt(findArray[2])).add(findArray[4]);
-                        // matrix.get(Integer.parseInt(findArray[4])).add(findArray[2]);
+                matrix.get(Integer.parseInt(findArray[2]))[Integer.parseInt(findArray[4])] = 1;
+                matrix.get(Integer.parseInt(findArray[4]))[Integer.parseInt(findArray[2])] = 1;
                         GraphNode newNodeInGraph = new GraphNode();
                         newNodeInGraph.id = findArray[2];
-                        newNodeInGraph.processed = false;
                         newNodeInGraph.neighbors = new ArrayList<GraphNode>();
 
                         GraphNode anotherNodeInGraph = new GraphNode();
                         anotherNodeInGraph.id = findArray[4];
-                        anotherNodeInGraph.processed = false;
                         anotherNodeInGraph.neighbors = new ArrayList<GraphNode>();
                         listOfNodes.forEach(action -> {
                             if (action.id.equals(findArray[4])) {
@@ -100,9 +115,7 @@ public class GraphsAndTrees {
                             }
                         
                         });
-
                     }
-
                 }
 
             }
