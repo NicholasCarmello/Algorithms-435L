@@ -3,6 +3,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.io.File;
 import java.util.Scanner;
+
+import javax.swing.Action;
+
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Queue;
@@ -154,7 +157,9 @@ public class GraphsAndTrees {
             if (graphArray[i].equals("new graph") || i == graphArray.length - 1) {
 
 
-            
+           
+            // Printing and display the elements in ArrayList
+             
                 System.out.println(" ");
                 //This prints out the Current adjacency List
                 newGraph.entrySet().forEach(entry -> {
@@ -165,8 +170,8 @@ public class GraphsAndTrees {
                 //prints out the breadth First and depth First traversal.
                 if (listOfNodes.size() != 0) {
                     
-                    BreadthFirst(listOfNodes.get(0));
-                    DepthFirst(listOfNodes.get(0));
+                    BreadthFirst(listOfNodes.get(0),listOfNodes);
+                    //DepthFirst(listOfNodes.get(0));
                 }
                 
                 //This prints out the current matrix
@@ -200,7 +205,6 @@ public class GraphsAndTrees {
                         //creates a new node in the graph
                         graph = new GraphNode();
                         graph.id = findArray[2];
-                        graph.processed = false;
                         graph.neighbors = new ArrayList<GraphNode>();
                         listOfNodes.add(graph);
                         
@@ -270,20 +274,33 @@ public class GraphsAndTrees {
     }
 
     // BreadthFirst traversal or aka level order traversal.
-    public static void BreadthFirst(GraphNode node) {
+    public static void BreadthFirst(GraphNode node, ArrayList<GraphNode> list) {
         Queue<GraphNode> q = new LinkedList<>();
         node.processed = true;
         q.add(node);
         while (q.size() > 0) {
             GraphNode cv = q.remove();
             System.out.println(cv.id);
+            list.forEach(action->{
+                if (action.id.equals(cv.id)){
+                    for (int i =0; i < action.neighbors.size(); i++){
+                        if(!action.neighbors.get(i).processed){
+                            action.neighbors.get(i).processed = true;
+                            
+                            q.add(action.neighbors.get(i));
+                        }
+
+                    }
+                }
+            });
+            /*
             cv.neighbors.forEach(action -> {
                 if (!action.processed) {
                     action.processed = true;
                     q.add(action);
 
                 }
-            });
+            });*/
         }
     }
 
