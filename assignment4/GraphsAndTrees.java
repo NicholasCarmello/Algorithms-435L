@@ -137,44 +137,53 @@ public class GraphsAndTrees {
     }
 
     public static void makeGraphs(String[] graphArray) {
+
+        //All of the datastructures used to store the nodes
         HashMap<String, List<String>> newGraph = new HashMap<String, List<String>>();
         ArrayList<int[]> matrix = new ArrayList<int[]>();
         GraphNode graph = new GraphNode();
         ArrayList<GraphNode> listOfNodes = new ArrayList<GraphNode>();
         
+
+        //This goes through the graphs array which contains the contents of the txt file
         for (int i = 0; i < graphArray.length; i++) {
 
+            //splits the line by spaces to find the numbers
             String findArray[] = graphArray[i].split(" ");
 
             if (graphArray[i].equals("new graph") || i == graphArray.length - 1) {
 
+
+            
+                System.out.println(" ");
+                //This prints out the Current adjacency List
                 newGraph.entrySet().forEach(entry -> {
                     System.out.println("key:" + entry.getKey() + " Value:" + entry.getValue());
                 });
+                System.out.println(" ");
 
+                //prints out the breadth First and depth First traversal.
                 if (listOfNodes.size() != 0) {
-                    /*
-                     * for (int j =0; j < listOfNodes.size(); j ++){ System.out.println("key" +
-                     * listOfNodes.get(j).id); listOfNodes.get(j).neighbors.forEach(action ->
-                     * System.out.print( action.id + " "));
-                     * 
-                     * }
-                     */
-                    //BreadthFirst(listOfNodes.get(0));
-                    // DepthFirst(listOfNodes.get(0));
+                    
+                    BreadthFirst(listOfNodes.get(0));
+                    DepthFirst(listOfNodes.get(0));
                 }
                 
+                //This prints out the current matrix
                 for (int o = 0; o < matrix.size(); o ++){
                     System.out.println(" ");
                     for (int k = 0; k < matrix.get(0).length; k ++){
                         System.out.print(matrix.get(o)[k]);
                     }
                 }
-                
+                System.out.println(" ");
+                //Clear the adjacency list, matrix and nodes.
                 matrix = new ArrayList<int[]>();
+                newGraph.clear();
+                listOfNodes.clear();
                 matrixCount =0;
                 flag = 0;
-                newGraph.clear();
+
                 
             }
 
@@ -186,7 +195,9 @@ public class GraphsAndTrees {
                         newGraph.put(findArray[2], new ArrayList<String>());
 
                         matrixCount +=1;
+                        
 
+                        //creates a new node in the graph
                         graph = new GraphNode();
                         graph.id = findArray[2];
                         graph.processed = false;
@@ -204,17 +215,19 @@ public class GraphsAndTrees {
                                 matrix.add(new int[matrixCount + 1] );
                             }
                         }
+                        //These will add the number one to the correct positions in the matrix
                         matrix.get(Integer.parseInt(findArray[2]))[Integer.parseInt(findArray[4])] = 1;
                         matrix.get(Integer.parseInt(findArray[4]))[Integer.parseInt(findArray[2])] = 1;
+                        //Creating 2 new graph nodes. Each for the 2 elements.
                         GraphNode newNodeInGraph = new GraphNode();
                         newNodeInGraph.id = findArray[2];
-                        newNodeInGraph.processed = false;
                         newNodeInGraph.neighbors = new ArrayList<GraphNode>();
 
                         GraphNode anotherNodeInGraph = new GraphNode();
                         anotherNodeInGraph.id = findArray[4];
-                        anotherNodeInGraph.processed = false;
                         anotherNodeInGraph.neighbors = new ArrayList<GraphNode>();
+
+                        //Finds each of the nodes in the file and inserts their neighbors.
                         listOfNodes.forEach(action -> {
                             if (action.id.equals(findArray[4])) {
                                 action.neighbors.add(newNodeInGraph);
