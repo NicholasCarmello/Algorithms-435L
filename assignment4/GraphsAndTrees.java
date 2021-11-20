@@ -35,7 +35,7 @@ public class GraphsAndTrees {
         TreeNode root = makeBST(magicItemsFindInBST, magicItems);
 
         // This will print out the in order Traversal of the BST
-        //inOrderTraversal(root);
+        inOrderTraversal(root);
         for (int i = 0; i < magicItemsFindInBST.length; i++) {
             searchBST(root, magicItemsFindInBST[i]);
         }
