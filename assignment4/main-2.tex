@@ -267,8 +267,8 @@ public static void makeGraphs(String[] graphArray) {
                             }
                         }
                         //These will add the number one to the correct positions in the matrix
-                        matrix.get(Integer.parseInt(findArray[2]))[Integer.parseInt(findArray[4])] = 1;
-                        matrix.get(Integer.parseInt(findArray[4]))[Integer.parseInt(findArray[2])] = 1;
+            matrix.get(Integer.parseInt(findArray[2]))[Integer.parseInt(findArray[4])] = 1;
+            matrix.get(Integer.parseInt(findArray[4]))[Integer.parseInt(findArray[2])] = 1;
                         //Creating 2 new graph nodes. Each for the 2 elements.
                         GraphNode newNodeInGraph = new GraphNode();
                         newNodeInGraph.id = findArray[2];
@@ -312,8 +312,13 @@ N/A & N/A & 9 \\
 \end{tabular}
 \end{center}
 \begin{lstlisting}
-Binary Search is a logarithmic function because it splits the total amount by half every time. The average look up time in a tree of 666 is 9. It was split in half 9 times to find the element it was searching for.
+Binary Search is a logarithmic function because it splits the total amount by half every time.
+The average look up time in a tree of 666 is 9. It was split in half 9 times to find the element it 
+was searching for.
 
-Depth first Search and Breadth first Search are both 
+Depth first Search and Breadth first Search are both the cardinality of the number of edges and 
+the cardinality of the number of vertices combined. It isn't enough to say these algorithms are o(n) 
+because they also have edges that need to be traversed too. 
+The cardinality is the part to make sure there are no duplicates.
 \end{lstlisting}
 \end{document}
