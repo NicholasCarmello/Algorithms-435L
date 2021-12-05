@@ -34,8 +34,8 @@ public class ssspAndKnapsack {
 
                 int price = (int)Float.parseFloat(priceLine[priceLine.length-1]);
                 int quantity = Integer.parseInt(quantityLine[quantityLine.length-1]);
-
                 String name = nameLine[nameLine.length-1];
+
                 newSpice.total_price = price;
                 newSpice.qty = quantity;
                 newSpice.name = name;
@@ -51,22 +51,36 @@ public class ssspAndKnapsack {
             }
         }
 
-        Collections.sort(values);
+        Collections.sort(values,Collections.reverseOrder());
         
     
         for(int i = 0; i < capacities.size(); i ++){
 
 
-
+            int runningTotal = 0;
             int currentCapacity = capacities.get(i);
             for ( int k = 0; k < values.size(); k++){
+                int currentValue = values.get(k);
                 if (currentCapacity ==0){
                     break;
                 }
                 else{
-                    if (currentCapacity> valueToName.get())
+                    if (currentCapacity >= valueToName.get(currentValue).qty){
+                        
+                        runningTotal += valueToName.get(currentValue).total_price;
+                        currentCapacity -= valueToName.get(currentValue).qty;
+                    }
+                    else{
+                        float man = (float) currentCapacity/valueToName.get(currentValue).qty;
+                        
+                        
+                        float newVal = valueToName.get(currentValue).total_price*man;
+                        runningTotal += (int) newVal;
+                        currentCapacity =0;
+                    }
                 }
             }
+            System.out.println(runningTotal);
         }
         
         
