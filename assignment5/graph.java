@@ -4,10 +4,10 @@ public class graph {
     ArrayList<graphNode> vertices = new ArrayList<graphNode>();
     ArrayList<graphNode> edges = new ArrayList<graphNode>();
 
-    public static void bellman(graph G, graphNode source) {
+    public static void bellman(graph G) {
         int distanceAttribute[] = new int[G.vertices.size()];
         boolean newBool = true;
-        singleSource(G, source, distanceAttribute);
+        singleSource(G, distanceAttribute);
 
         for (int i = 1; i < G.vertices.size(); i++) {
             for (int j = 0; j < G.edges.size(); j++) {
@@ -30,7 +30,7 @@ public class graph {
 
     }
     
-    public static void singleSource(graph newGraph, graphNode source, int distanceAttribute[]) {
+    public static void singleSource(graph newGraph,  int distanceAttribute[]) {
         for (int i = 0; i < newGraph.vertices.size(); ++i) {
             distanceAttribute[i] = 1000;
 

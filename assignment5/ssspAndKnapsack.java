@@ -2,8 +2,7 @@ import java.io.File;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashMap; // import the HashMap class
-import java.util.Collections;
+
 
 public class ssspAndKnapsack {
     public static int newGraphCount = 0;
@@ -20,8 +19,8 @@ public class ssspAndKnapsack {
 
     public static void spiceAlgorithm(String[] spiceArray) {
         ArrayList<Integer> capacities = new ArrayList<Integer>();
-        HashMap<Integer, spice> valueToName = new HashMap<Integer, spice>();
-        ArrayList<Integer> values = new ArrayList<Integer>();
+
+        ArrayList<spice> spiceObjects = new ArrayList<spice>();
 
         for (int i = 0; i < spiceArray.length; i++) {
             String[] lineSplit = spiceArray[i].split(" ");
@@ -39,9 +38,9 @@ public class ssspAndKnapsack {
                 newSpice.total_price = price;
                 newSpice.qty = quantity;
                 newSpice.name = name;
+                newSpice.unity_price = price / quantity;
 
-                values.add(price / quantity);
-                valueToName.put(price / quantity, newSpice);
+                spiceObjects.add(newSpice);
             }
             if (lineSplit[0].equals("knapsack")) {
                 String[] firstSplit = spiceArray[i].split(";");
@@ -51,31 +50,47 @@ public class ssspAndKnapsack {
             }
         }
 
-        Collections.sort(values, Collections.reverseOrder());
+        int arrayLength = spiceObjects.size();
+        for (int i = 0; i < arrayLength - 2; i++) {
+            int smallPosition = i;
+            for (int j = i + 1; j < arrayLength; j++) {
+
+                if (spiceObjects.get(j).unity_price > spiceObjects.get(smallPosition).unity_price) {
+
+                    smallPosition = j;
+                }
+            }
+            // this is the swapping work that is done. it finds the the next smallest
+            // element and swaps its position with i
+            spice temp = spiceObjects.get(smallPosition);
+            spiceObjects.set(smallPosition, spiceObjects.get(i));
+            spiceObjects.set(i, temp);
+        }
 
         for (int i = 0; i < capacities.size(); i++) {
 
             int runningTotal = 0;
             int currentCapacity = capacities.get(i);
-            for (int k = 0; k < values.size(); k++) {
-                int currentValue = values.get(k);
+            for (int k = 0; k < spiceObjects.size(); k++) {
+                spice currentSpice = spiceObjects.get(k);
                 if (currentCapacity == 0) {
                     break;
                 } else {
-                    if (currentCapacity >= valueToName.get(currentValue).qty) {
+                    if (currentCapacity >= currentSpice.qty) {
 
-                        runningTotal += valueToName.get(currentValue).total_price;
-                        currentCapacity -= valueToName.get(currentValue).qty;
+                        runningTotal += currentSpice.total_price;
+                        currentCapacity -= currentSpice.qty;
                     } else {
-                        float man = (float) currentCapacity / valueToName.get(currentValue).qty;
+                        float man = (float) currentCapacity / currentSpice.qty;
 
-                        float newVal = valueToName.get(currentValue).total_price * man;
+                        float newVal = currentSpice.total_price * man;
                         runningTotal += (int) newVal;
                         currentCapacity = 0;
                     }
                 }
             }
-            System.out.println("Knapsack of capacity " + capacities.get(i) + " is worth " + runningTotal);
+            System.out.println("Knapsack of capacity " + capacities.get(i) + " is worth "
+                    + runningTotal);
         }
 
     }
@@ -89,13 +104,9 @@ public class ssspAndKnapsack {
                     newGraphCount += 1;
                     continue;
                 }
-                
-                newGraph.bellman(newGraph, newGraph.vertices.get(0));
-                
-                
-                newGraph.vertices.clear();
-                newGraph.edges.clear();
-                
+
+                newGraph.bellman(newGraph);
+                newGraph = new graph();
 
             } else {
 
@@ -111,24 +122,25 @@ public class ssspAndKnapsack {
                     newGraph.vertices.add(newGraphNode);
 
                 } else if (findArray[1].equals("edge")) {
-                    
-                            graphNode newGraphNode = new graphNode();
-                            newGraphNode.to = Integer.parseInt(findArray[4]);
-                            newGraphNode.from = Integer.parseInt(findArray[2]);
 
-                            if (findArray.length == 6) {
-                                newGraphNode.weight = Integer.parseInt(findArray[5]);
-                            } else {
-                                newGraphNode.weight = Integer.parseInt(findArray[6]);
-                            }
+                    graphNode newGraphNode = new graphNode();
+                    newGraphNode.to = Integer.parseInt(findArray[4]);
+                    newGraphNode.from = Integer.parseInt(findArray[2]);
 
-                            newGraph.edges.add(newGraphNode);;
+                    if (findArray.length == 6) {
+                        newGraphNode.weight = Integer.parseInt(findArray[5]);
+                    } else {
+                        newGraphNode.weight = Integer.parseInt(findArray[6]);
+                    }
+
+                    newGraph.edges.add(newGraphNode);
+                    ;
                 }
 
             }
-            
+
         }
-        newGraph.bellman(newGraph, newGraph.vertices.get(0));
+        newGraph.bellman(newGraph);
 
     }
 
@@ -149,4 +161,5 @@ public class ssspAndKnapsack {
             e.printStackTrace();
         }
     }
+
 }
