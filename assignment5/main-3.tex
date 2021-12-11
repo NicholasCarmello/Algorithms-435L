@@ -217,9 +217,7 @@ public static void spiceAlgorithm(String[] spiceArray) {
  \hline
 Spice Algorithm & SSSP Bellman\\[0.10ex] 
  \hline \hline
-N/A & N/A \\ 
- \hline
- O(n^2) & O(|V| + |E|)\\
+ O(n^2) & O(|V| * |E|)\\
  \hline
 \end{tabular}
 \end{center}
@@ -228,7 +226,7 @@ The spice algorithm runs in n^2 time because I'm using selection sort to sort th
 descending order. If I wanted the algorithm to be faster, I could use quick sort or merge sort. 
 This would lower the time to n log n.
 
-SSSP and bellman ford algorithm has a running time of the number of vertices plus the number of 
+SSSP and bellman ford algorithm has a running time of the number of vertices times the number of 
 edges. This is because of the for loops involved. The algorithm loops through the number of edges 
 first and then the number of vertices. This is used at the relax part of the algorithm.
 \end{lstlisting}
