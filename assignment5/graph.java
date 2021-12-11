@@ -28,9 +28,10 @@ public class graph {
         if (newBool) {
             System.out.println("\n" + "New Graph ");
             for (int i = 0; i < G.vertices.size(); i++) {
-                System.out.println(1 + " -> " + (i + 1) + " cost is " + distanceAttribute[i]);
+                System.out.println("source vertex " + 1 + " -> " + " destination " + (i + 1) + " cost is " + distanceAttribute[i]);
             }
         }
+        
 
     }
     //This will relax all of the vertices which means put their distance to infinity.
