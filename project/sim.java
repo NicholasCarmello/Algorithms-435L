@@ -7,15 +7,12 @@ public class sim{
     private static int case2=0;
 
     public static void main(String []args){
-        int array[] = fillArray(Integer.parseInt(args[0]), .02,8);
-        int counter = 0;
-        for (int i = 0; i <array.length; i++){
-            if (array[i] == 1){
-                counter +=1;
-            }
-        }
-        System.out.print(counter);
+        //Calls the fill array method on this array.
+        int array[] = fillArray(Integer.parseInt(args[0]), .02);
+        
         ArrayList<Integer> newArrayList = new ArrayList<Integer>();
+
+        //This will call the case studies functio everytime the array is length 8
         for (int i = 0; i < array.length; i++){
             newArrayList.add(array[i]);
             if (newArrayList.size() ==8){
@@ -23,15 +20,23 @@ public class sim{
                 newArrayList.clear();
             }
         }
-        
+        caseStudies(newArrayList, newArrayList.size());
 
-        System.out.println("Case 1: " + case1);
-        System.out.println("Case 2: " + case2);
-        System.out.println("Case 3: " + case3  + "");
-        System.out.println("total: " + (case3 + case1 + case2));
+
+        //prints out the case studies found on the project site.
+        System.out.println("Case (1): "  + (Integer.parseInt(args[0]) / 8) + " X " + ".85 = " 
+        + ((Integer.parseInt(args[0]) / 8) * .85) +  " instances requiring " + case1 +  " tests.");
+        System.out.println("Case (2): "  + (Integer.parseInt(args[0]) / 8) + " X " + ".1496 = " 
+        + ((Integer.parseInt(args[0]) / 8) * .1496) +  " instances requiring " + case2 +  " tests.");
+        System.out.println("Case (3): "  + (Integer.parseInt(args[0]) / 8) + " X " + ".0004 = " 
+        + ((Integer.parseInt(args[0]) / 8) * .0004) +  " instances requiring " + case3 +  " tests.");
+       
+       //Prints out the total tests for 
+        System.out.println((case2+case1+case3) +" tests to screen a population of " + args[0] + " people for a disease with " + .02 + " infection rate.");
 
     }
-    public static int[] fillArray(int population, double infectionRate,int testSize){
+    //This will polute the array with 0's and 1's. Amount depends on infection rate and population
+    public static int[] fillArray(int population, double infectionRate){
         int populationOfPeople[] = new int[population];
        
         int curCount = 0;
