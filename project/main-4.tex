@@ -1,0 +1,144 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to Overleaf --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you open the
+% 'Share' menu, you can invite other users to edit at the same
+% time. See www.overleaf.com/learn for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{article}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[left=0.2 in,top=0.2in,right=0.2 in,bottom=0.2in]{geometry}
+\begin{document}
+\title{Final Project}
+\author{Nicholas Carmello}
+\date{December 2021}
+\section{FillArray Method}
+\textbf{
+The fillarray method will initalize a random object that will pick a random number between 0 and 1000. The method will then infect the person at this index. This will happen in a while loop until the number of people infection is equal to the population multiplied by the infection rate. The array with the infected people is then returned.
+}
+\begin{lstlisting}[language = java]
+public static int[] fillArray(int population, double infectionRate){
+        int populationOfPeople[] = new int[population];
+        int curCount = 0;
+        Random rand = new Random();
+
+        //This loop will infect the population * infectionRate.
+        //Ex: population is 1000 and infectionRate is .02, then 20 people will be infected.
+        while (curCount != (population * infectionRate)){
+            int nextIndexToBeInfected  = rand.nextInt(population);
+            if (populationOfPeople[nextIndexToBeInfected] == 0){
+                curCount +=1;
+                populationOfPeople[nextIndexToBeInfected] = 1;
+            }
+            
+        }
+        //Returns the array of infected people
+        return populationOfPeople;
+    }
+\end{lstlisting}
+
+\section{Case studies method}
+\textbf{ The case studies array will first check the whole array which is size of 8 and see if there is an infected person in there. When there is an infected person in array, it will then split the array into 2, both of size 4. The first array is then checked for an infected person. If there is none, then we know the infected person is in the second array. Case 2 is then increased by 7. The other case is when there is an infected person in the first array. Then we have to check the second array and if there's one in the second array, then it's a case 3. Otherwise it's case 2 again.}
+\begin{lstlisting}{language = java}
+public static void caseStudies(ArrayList<Integer> populationArray, int testSize){
+
+        //2 arrayLists for the groups of 4
+        ArrayList<Integer> studiesOne = new ArrayList<Integer>();
+        ArrayList<Integer> studiesTwo = new ArrayList<Integer>();
+
+        //If the populationArray is of size 8 and has no infected people in it, it will then
+        //return and increase case1 by 1
+        if (populationArray.indexOf(1) == -1){
+            case1 +=1; 
+            return;
+        }
+        //The else statement will first put the first half of the array into one array
+        //and the other half in the second array
+        else{
+            for (int i = 0;i< populationArray.size(); i ++){
+                if (i <= 3){
+                    studiesOne.add(populationArray.get(i));
+
+
+                }
+                else{
+                    studiesTwo.add(populationArray.get(i));
+
+                }
+
+            }  
+            
+            //The first group is then checked for covid, and if they are infected,
+            // it will check to see if the second array has covid.
+            //If the second array has covid and the first, then the case3 is increased by 11.
+            //Else the case2 is increased by 7
+            if (studiesOne.contains(1)){
+                if (studiesTwo.contains(1)){
+                    case3+=11;
+                    
+                }
+                else{
+                    case2+=7;
+                }
+            }
+            else{
+                case2+=7;
+
+            }
+        }
+    }
+
+\end{lstlisting}
+\section{Main Method}
+\textbf{ The main method calls the fillArray methods which will return an array with infected people in it. It will then loop through this and add the current index into new array. When the new array is of size 8, it will call case studies with the new assay as an attribute. The array will be cleared and the steps will be repeated until the array is looped through. }
+\begin{lstlisting}{language = java}
+public static void main(String []args){
+        //Calls the fill array method on this array.
+        int array[] = fillArray(Integer.parseInt(args[0]), .02);
+        
+        ArrayList<Integer> newArrayList = new ArrayList<Integer>();
+
+        //This will call the case studies functio everytime the array is length 8
+        for (int i = 0; i < array.length; i++){
+            newArrayList.add(array[i]);
+            if (newArrayList.size() ==8){
+                caseStudies(newArrayList, 8);
+                newArrayList.clear();
+            }
+        }
+        caseStudies(newArrayList, newArrayList.size());
+}
+\end{lstlisting}
+\section{Hypergeometric vs binomial distribution}
+\begin{center}
+
+The main difference between binomial and hypergeometric distributions is that binomial distributions probability for an event to occur never changes while hypergeometrics probability does. For every trial or event in a hypergeometric distribution, it changes the probability. Since were using an infection rate of .02 and never change the probability of when an event can occur, this can skew the results. If we were to change the probability every time based on the number of infected people found already, this could change the results.
+\end{center}
+\section{Case studies for different population sizes.}
+\begin{lstlisting}
+Population of 1000: 
+
+case(1): 125 X .85 = 106.25. Actual result: 108
+case(2): 125 X .1496 = 18.7. Actual result: 119
+case(3): 125 X .0004 = 0.05. Actual result: 11
+
+
+
+Population of 10000:
+
+case(1): 1250 X .85 = 1062.5. Actual result: 1067
+case(2): 1250 X .1496 = 187.0. Actual result: 1246
+case(3): 1250 X .0004 = 0.50. Actual result: 66
+
+
+Population of 100000:
+
+case(1): 1250 X .85 = 10625.. Actual result: 10633
+case(2): 1250 X .1496 = 1870.0. Actual result: 12635
+case(3): 1250 X .0004 = 5.0. Actual result: 693
+
+
+\end{lstlisting}
+\end{document}
